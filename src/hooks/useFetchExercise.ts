@@ -14,7 +14,7 @@ const useFetchExercise = () => {
 
         setData(result)
         setError(null)
-        console.log(result?.length)
+        // console.log(result)
       } catch (error) {
         console.log("error:", error)
         if (error instanceof Error) {

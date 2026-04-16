@@ -1,4 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-}
+        --app-bg: #f8faf5;
+        --card-bg: #ffffff;
+        --muscle-bg: #EAF3DE;
+
+        --muscle-text: #3B6D11;
+        --accent: #639922;
+        --accent-text: #3B6D11;
+
+        --card-hover: #C0DD97;
+};
