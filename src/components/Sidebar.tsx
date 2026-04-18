@@ -6,6 +6,7 @@ interface FilterProps {
   handleEquipmentFilter: (value: string) => void;
   bodyParts: string[];
   equipments: string[];
+ 
 }
 
 const Sidebar = ({
@@ -15,6 +16,7 @@ const Sidebar = ({
     handleEquipmentFilter,
     bodyParts,
     equipments,
+    
 }: FilterProps) => {
 
 
@@ -27,9 +29,8 @@ const Sidebar = ({
           {bodyParts.map((part) => (
           <div key={part}>
             <button 
-            onClick={() => {
-              console.log("selected body part:", part)
-              handleBodyPartFilter(part)}}
+            onClick={() => 
+              handleBodyPartFilter(part)}
             className={`hover:bg-(--muscle-bg) w-full text-start p-1 rounded-md
                ${
               bodyPart === part
