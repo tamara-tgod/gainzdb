@@ -3,17 +3,15 @@ import type { Exercise } from "../types/exercise";
 
 // custom hook
 async function fetchExercise(): Promise<Exercise[]> {
- console.log("Full URL being fetched:", url)
-console.log("Key value:", API_KEY)
-  const url = API_URL;
 
+ const url = `${API_URL}?rapidapi-key=${API_KEY}`
   const options: RequestInit = {
     method: "GET",
     headers: {
-      "x-rapidapi-key": API_KEY,
       "x-rapidapi-host": API_HOST,
     },
   };
+  
   try {
     const response = await fetch(url, options);
 
