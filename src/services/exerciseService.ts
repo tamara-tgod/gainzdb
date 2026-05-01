@@ -3,8 +3,8 @@ import type { Exercise } from "../types/exercise";
 
 // custom hook
 async function fetchExercise(): Promise<Exercise[]> {
-  console.log("API URL:", import.meta.env.VITE_API_BASE_URL)
-console.log("API KEY exists:", !!import.meta.env.VITE_RAPIDAPI_KEY)
+ console.log("Full URL being fetched:", url)
+console.log("Key value:", API_KEY)
   const url = API_URL;
 
   const options: RequestInit = {
