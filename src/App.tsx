@@ -13,6 +13,7 @@ function App() {
   const { data, loading, error } = useFetchExercise();
   const [favourite, setFavourite] = useState<Exercise[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("")
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -31,6 +32,10 @@ function App() {
     if (equipment !== "All" && exercise.equipment !== equipment) {
     
       return false;
+    }
+
+    if(bodyPart === searchQuery) {
+      return true
     }
 
     return true;
