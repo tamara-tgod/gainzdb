@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
 import type { Exercise } from "./types/exercise";
 import FavouritesDrawer from "./components/FavouritesDrawer";
+import SkeletonCard from "./components/SkeletonCard";
 
 function App() {
   const [bodyPart, setBodyPart] = useState("All");
@@ -15,7 +16,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
 
-  if (loading) return <p>Loading...</p>;
+
+  // if (loading) return (
+  //   <div className="grid grid-cols-3 gap 3">
+  //     {Array.from({ length: 10}).map((_, index) => (
+  //       <SkeletonCard key={index} />
+  //     ))}
+  //   </div>
+
+  // );
   if (error) {
     return <p>{error instanceof Error ? error.message : error}</p>;
   }
@@ -100,19 +109,34 @@ function App() {
             equipments={equipments}
           />
         </div>
-        <div className="grid grid-cols-1  lg:flex flex-wrap gap-3 bg-(--app-bg) ">
-          {filteredData?.map((exercise) => (
-            <ExerciseCard
-              key={exercise.id}
-              exercise={exercise}
-              addToFavourite={addToFavourite}
-            />
-          ))}
+
+        <div className="content-area">
+          {loading ? (
+      <div className="grid grid-cols-3 gap-3">
+        {Array.from({ length: 10}).map((_, index) => (
+          <SkeletonCard key={index} />
+        ))}
+      </div>
+    ) : (
+
+        <div className="grid grid-cols-1 lg:flex flex-wrap gap-3 bg-(--app-bg)">
+         { filteredData?.map((exercise) => (
+              <ExerciseCard
+                    key={exercise.id}
+                    exercise={exercise}
+                    addToFavourite={addToFavourite}
+                  />   
+                ))}
         </div>
+    )}
+    </div>
+       
       </div>
     </div>
   );
 }
 
 export default App;
-//grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+
+          
+      
