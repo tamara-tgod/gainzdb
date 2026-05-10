@@ -34,8 +34,8 @@ function App() {
       return false;
     }
 
-    if(bodyPart === searchQuery) {
-      return true
+    if( searchQuery !== "" && !exercise.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+      return false
     }
 
     return true;
@@ -80,7 +80,7 @@ function App() {
 
   return (
     <div>
-      <Toolbar onSavedClick={onSavedClick} favouritesCount={favourite.length} />
+      <Toolbar onSavedClick={onSavedClick} favouritesCount={favourite.length}  setSearchQuery={setSearchQuery}/>
    
           <FavouritesDrawer
         favourites={favourite}

@@ -3,13 +3,6 @@ import type { Exercise } from "../types/exercise";
 
 // custom hook
 async function fetchExercise(): Promise<Exercise[]> {
-<<<<<<< HEAD
-=======
-  console.log("API URL:", import.meta.env.VITE_API_BASE_URL)
-console.log("API KEY exists:", !!import.meta.env.VITE_RAPIDAPI_KEY)
-  const url = API_URL;
->>>>>>> parent of fcf170b (debugging)
-
  const url = `${API_URL}?rapidapi-key=${API_KEY}`
   const options: RequestInit = {
     method: "GET",
