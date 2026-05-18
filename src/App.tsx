@@ -7,26 +7,42 @@ import Toolbar from "./components/Toolbar";
 import type { Exercise } from "./types/exercise";
 import FavouritesDrawer from "./components/FavouritesDrawer";
 import SkeletonCard from "./components/SkeletonCard";
-import ErrorImage from "./assets/Journey-bro.png"
+import ErrorImage from "./assets/Journey-bro.png";
+import { RefreshCw } from "lucide-react";
 
 function App() {
   const [bodyPart, setBodyPart] = useState("All");
   const [equipment, setEquipment] = useState("All");
-  const { data, loading, error } = useFetchExercise();
+  const { data, loading, error, retry } = useFetchExercise();
   const [favourite, setFavourite] = useState<Exercise[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // if (loading) return (
-  //   <div className="grid grid-cols-3 gap 3">
-  //     {Array.from({ length: 10}).map((_, index) => (
-  //       <SkeletonCard key={index} />
-  //     ))}
-  //   </div>
-
-  // );
   if (error) {
-    return <p>{error instanceof Error ? error.message : error}</p>;
+    return (
+      <div className="w-full flex flex-1 flex-col h-screen justify-center items-center gap-4 text-center">
+        <h1 className="font-semibold text-2xl">
+          Something went erong. Please try again
+        </h1>
+        <p className="text-gray-400">
+          Check your internet correction or click retry
+        </p>
+        <img
+          src={ErrorImage}
+          alt="No exercises found matching your search criteria"
+          width={400}
+          height={200}
+        />
+        <button
+          onClick={retry}
+          disabled={loading}
+          className="bg-(--accent) text-white border py-2 px-6 rounded-full hover:opacity-90 transition cursor-pointer mt-4 flex items-center gap-1"
+        >
+          <RefreshCw size={16} className={loading ? "animate-spin" : ""}/>
+          Retry
+        </button>
+      </div>
+    );
   }
 
   // filter logic
@@ -125,12 +141,11 @@ function App() {
           ) : filteredData?.length === 0 ? (
             <div className="w-full h-screen flex flex-col justify-center items-center text-center">
               <h2 className="font-semibold text-4xl">Exercise Not Available</h2>
-              <img 
-              src={ErrorImage} 
-              alt="No exercises found matching your search criteria"
-              width={400}
-              height={200}
-              className="mx-3 my-auto"
+              <img
+                src={ErrorImage}
+                alt="No exercises found matching your search criteria"
+                width={400}
+                height={200}
               />
             </div>
           ) : (

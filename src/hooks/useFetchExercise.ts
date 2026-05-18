@@ -6,9 +6,11 @@ const useFetchExercise = () => {
     const [data, setData] = useState<Exercise[] | null>(null)
     const [loading, setLoading ] = useState(true)
     const [error, setError] = useState<Error | null>(null)
+    const [retryCount, setRetryCount] = useState(0)
 
     useEffect(() => {
     const loadExercise = async () => {
+      setLoading(true)
       try {
         const result = await fetchExercise();
 
@@ -28,9 +30,13 @@ const useFetchExercise = () => {
       }
     };
     loadExercise()
-  }, []);
+  }, [retryCount]);
 
-  return {data, loading, error}
+  const retry = () => {
+     setRetryCount( prev => prev + 1)
+  }
+
+  return {data, loading, error, retry}
 }
 
 export default useFetchExercise;
