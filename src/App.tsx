@@ -22,14 +22,14 @@ function App() {
     return (
       <div className="w-full flex flex-1 flex-col h-screen justify-center items-center gap-4 text-center">
         <h1 className="font-semibold text-2xl">
-          Something went erong. Please try again
+          Something went wrong. Please try again
         </h1>
         <p className="text-gray-400">
-          Check your internet correction or click retry
+          Check your internet connection or click retry
         </p>
         <img
           src={ErrorImage}
-          alt="No exercises found matching your search criteria"
+          alt="Error loading exercises"
           width={400}
           height={200}
         />
