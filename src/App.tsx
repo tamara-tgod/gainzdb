@@ -7,6 +7,7 @@ import Toolbar from "./components/Toolbar";
 import type { Exercise } from "./types/exercise";
 import FavouritesDrawer from "./components/FavouritesDrawer";
 import SkeletonCard from "./components/SkeletonCard";
+import ErrorImage from "./assets/Journey-bro.png"
 
 function App() {
   const [bodyPart, setBodyPart] = useState("All");
@@ -14,8 +15,7 @@ function App() {
   const { data, loading, error } = useFetchExercise();
   const [favourite, setFavourite] = useState<Exercise[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("")
-
+  const [searchQuery, setSearchQuery] = useState("");
 
   // if (loading) return (
   //   <div className="grid grid-cols-3 gap 3">
@@ -39,12 +39,14 @@ function App() {
     }
 
     if (equipment !== "All" && exercise.equipment !== equipment) {
-    
       return false;
     }
 
-    if( searchQuery !== "" && !exercise.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false
+    if (
+      searchQuery !== "" &&
+      !exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ) {
+      return false;
     }
 
     return true;
@@ -89,14 +91,17 @@ function App() {
 
   return (
     <div>
-      <Toolbar onSavedClick={onSavedClick} favouritesCount={favourite.length}  setSearchQuery={setSearchQuery}/>
-   
-          <FavouritesDrawer
+      <Toolbar
+        onSavedClick={onSavedClick}
+        favouritesCount={favourite.length}
+        setSearchQuery={setSearchQuery}
+      />
+
+      <FavouritesDrawer
         favourites={favourite}
         isOpen={isOpen}
         onClose={handleClose}
         removeFromFavourite={removeFromFavourite}
-        
       />
       <div className="min-h-screen py-6 flex flex-col md:flex-row gap-6">
         <div className=" px-3 py-2 bg-white">
@@ -110,33 +115,39 @@ function App() {
           />
         </div>
 
-        <div className="content-area">
+        <div className="content-area flex-1">
           {loading ? (
-      <div className="grid grid-cols-3 gap-3">
-        {Array.from({ length: 10}).map((_, index) => (
-          <SkeletonCard key={index} />
-        ))}
-      </div>
-    ) : (
-
-        <div className="grid grid-cols-1 lg:flex flex-wrap gap-3 bg-(--app-bg)">
-         { filteredData?.map((exercise) => (
-              <ExerciseCard
-                    key={exercise.id}
-                    exercise={exercise}
-                    addToFavourite={addToFavourite}
-                  />   
-                ))}
+            <div className="grid grid-cols-3 gap-3">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <SkeletonCard key={index} />
+              ))}
+            </div>
+          ) : filteredData?.length === 0 ? (
+            <div className="w-full h-screen flex flex-col justify-center items-center text-center">
+              <h2 className="font-semibold text-4xl">Exercise Not Available</h2>
+              <img 
+              src={ErrorImage} 
+              alt="No exercises found matching your search criteria"
+              width={400}
+              height={200}
+              className="mx-3 my-auto"
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:flex flex-wrap gap-3 bg-(--app-bg)">
+              {filteredData?.map((exercise) => (
+                <ExerciseCard
+                  key={exercise.id}
+                  exercise={exercise}
+                  addToFavourite={addToFavourite}
+                />
+              ))}
+            </div>
+          )}
         </div>
-    )}
-    </div>
-       
       </div>
     </div>
   );
 }
 
 export default App;
-
-          
-      
